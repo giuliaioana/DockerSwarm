@@ -105,7 +105,7 @@ Expected output:
 
 Request sent to RabbitMQ and processed by worker: 
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"ProductID": 1114,"ProductName": "pix", "Price": 10}' http://172.31.7.35:5000/add-job
+curl -X POST -H "Content-Type: application/json" -d '{"ProductID": 1114,"ProductName": "pix", "Price": 10}' http://localhost:5001/add-job
 ```
 ```
 /products/ - GET, POST

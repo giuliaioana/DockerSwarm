@@ -27,7 +27,7 @@ api = Flask(__name__)
 
 host = "ip-172-31-42-104" if os.getenv("SWARM") else settings.hostname
 print(f"""mysql://{settings.user}:{get_db_password().rstrip()}@{host}/{settings.db}""")
-#api.config['SQLALCHEMY_DATABASE_URI'] = f"""mysql://{settings.user}:{get_db_password()}@{host}/{settings.db}"""
+api.config['SQLALCHEMY_DATABASE_URI'] = f"""mysql://{settings.user}:{get_db_password()}@{host}/{settings.db}"""
 #api.config['SQLALCHEMY_DATABASE_URI'] = "mysql://admin:admin@54.195.175.251/main"
 db = SQLAlchemy(api)
 class Products(db.Model):
@@ -57,6 +57,7 @@ db.create_all()
 @api.route('/add-job', methods=['POST'])
 def add():
     data = request.get_json(force=True) # extract data from request 
+    print(f"data: {data}")
     connection = pika.BlockingConnection(pika.ConnectionParameters(host=rabitmq_host))
     channel = connection.channel()
     channel.queue_declare(queue='task_queue', durable=True)
