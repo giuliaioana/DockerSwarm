@@ -1,0 +1,60 @@
+version: '3.1'
+services: 
+  app: 
+    container_name: app
+    # networks:
+    #   - ubuntu_default
+    environment:
+      ENV_FOR_DYNACONF: docker
+    links:
+      - mysql
+    image: giuliaioana/python_flask_app:latest
+    ports: 
+      - 5000:5000
+    volumes: 
+      - ./src/main.py:/main.py:rw
+      #- ./src/settings.yaml:/settings.yaml:rw
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: mysql
+    # networks:
+    #   - ubuntu_default
+    environment:
+      MYSQL_DATABASE: main
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: root 
+    ports:
+      - "3306:3306"
+    # volumes:
+    #   - "./scripts/schema.sql:/docker-entrypoint-initdb.d/1.sql"
+    #   - "./scripts/data.sql:/docker-entrypoint-initdb.d/2.sql"
+  
+  rabbitmq:
+    image: 'rabbitmq:3.6-management-alpine'
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+  
+  worker:
+    #build: worker
+    image: giuliaioana/worker:latest
+    volumes:
+      - ./src/worker:/app
+    environment:
+      - PYTHONUNBUFFERED=1  
+
+  phpmyadmin:
+      image: phpmyadmin
+      restart: always
+      ports:
+        - 8080:80
+      environment:
+        - PMA_ARBITRARY=1
+# networks:
+#   ubuntu_default:
+#     external: true

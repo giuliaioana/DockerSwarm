@@ -1,0 +1,19 @@
+version: '3.8'
+services: 
+  app: 
+    environment:
+      ENV_FOR_DYNACONF: docker
+      SWARM: "True"
+    deploy:
+      placement:
+        constraints: [node.labels.FE == true]
+    image: giuliaioana/python_flask_app:latest
+    ports: 
+      - 5000:5000
+    volumes: 
+      - /home/ubuntu/PythonFlask/src/main.py:/main.py:rw
+    secrets:
+      - DB_PASSWORD
+secrets:
+  DB_PASSWORD:
+    external: true

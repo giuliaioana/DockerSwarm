@@ -1,0 +1,18 @@
+version: '3.8'
+services: 
+  
+  worker:
+    image: giuliaioana/worker:latest
+    volumes:
+      - /home/ubuntu/PythonFlask/src/worker:/app
+    environment:
+      ENV_FOR_DYNACONF: docker
+      SWARM: "True"
+    deploy:
+      placement:
+        constraints: [node.labels.FE == true]
+    secrets:
+      - DB_PASSWORD
+secrets:
+  DB_PASSWORD:
+    external: true
