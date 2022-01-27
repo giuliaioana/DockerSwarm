@@ -21,7 +21,7 @@ def get_db_password() -> str:
 def get_con():
     mysq_connection = pymysql.connect(host=hostname,
                                 user='admin',
-                                password=str(get_db_password()),
+                                password=get_db_password().rstrip(),
                                 database='main',
                                 cursorclass=pymysql.cursors.DictCursor)
     return mysq_connection
