@@ -11,7 +11,7 @@ services:
     ports: 
       - 5000:5000
     volumes: 
-      - /home/ubuntu/PythonFlask/src/main.py:/main.py:rw
+      - /home/ubuntu/DockerSwarm/src/main.py:/main.py:rw
     secrets:
       - DB_PASSWORD
 secrets:
