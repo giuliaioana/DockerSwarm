@@ -10,6 +10,8 @@ services:
     image: giuliaioana/python_flask_app:latest
     ports: 
       - 5000:5000
+    volumes:
+      - /home/ubuntu/DockerSwarm/src/main.py:/main.py:rw
     secrets:
       - DB_PASSWORD
 secrets:
