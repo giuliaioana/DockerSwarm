@@ -16,17 +16,17 @@ def get_db_password() -> str:
     except Exception as error:
         db_password = "admin"
         pass
-    return db_password
+    return db_password.rstrip()
 
 
 pymysql.install_as_MySQLdb()
 
-rabitmq_host = "54.195.175.251" if os.getenv("SWARM") else "rabbitmq"
+rabitmq_host = "ip-172-31-42-104" if os.getenv("SWARM") else "rabbitmq"
 
 api = Flask(__name__)
-print("wow")
+
 host = "ip-172-31-42-104" if os.getenv("SWARM") else settings.hostname
-print(f"""mysql://{settings.user}:{get_db_password().rstrip()}@{host}/{settings.db}""")
+print(f"""mysql://{settings.user}:{get_db_password()}@{host}/{settings.db}""")
 #api.config['SQLALCHEMY_DATABASE_URI'] = f"""mysql://{settings.user}:{get_db_password()}@{host}/{settings.db}"""
 #api.config['SQLALCHEMY_DATABASE_URI'] = "mysql://admin:admin@54.195.175.251/main"
 db = SQLAlchemy(api)
