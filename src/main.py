@@ -24,7 +24,7 @@ pymysql.install_as_MySQLdb()
 rabitmq_host = "54.195.175.251" if os.getenv("SWARM") else "rabbitmq"
 
 api = Flask(__name__)
-
+print("wow")
 host = "54.195.175.251" if os.getenv("SWARM") else settings.hostname
 print(f"""mysql://{settings.user}:{str(get_db_password())}@{host}/{settings.db}""")
 #api.config['SQLALCHEMY_DATABASE_URI'] = f"""mysql://{settings.user}:{get_db_password()}@{host}/{settings.db}"""
